@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Data
+*.wav
+*.csv
+
+# Environment
+.env
+.venv
+
+# Mac
+.DS_Store
