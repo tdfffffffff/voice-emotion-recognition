@@ -23,10 +23,10 @@ The project explores the trade-offs between CPU-efficient classical ML pipelines
 - Deep learning Wav2Vec2 notebook for end-to-end raw audio classification  
 - Large file support via Git LFS for audio and CSV files  
 - Cost-efficient design: CPU-only classical ML models vs GPU deep learning  
-- Optimized accuracy:  
+- Optimised accuracy:  
   - Classical ML baseline: ~55%  
   - Enhanced with feature engineering: ~65–70%  
-  - Deep learning Wav2Vec2: ~70–75%  
+  - Deep learning Wav2Vec2: ~80–72%  
 
 ## Model Performance
 
@@ -39,7 +39,7 @@ The project explores the trade-offs between CPU-efficient classical ML pipelines
 
 **Cross-Validation (Random Forest 5-fold):** 0.541 ± 0.008  
 
-> **Conclusion:** Classical ML models provide a baseline, but their performance is limited by handcrafted features. Deep learning approaches (e.g., Wav2Vec2) are needed to better capture complex audio patterns and improve accuracy.
+> **Conclusion:** Classical ML models provide a baseline, but their performance is limited by handcrafted features. Deep learning approaches (eg. Wav2Vec2) are needed to better capture complex audio patterns and improve accuracy.
 
 
 ## Key Learning Outcomes
