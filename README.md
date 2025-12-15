@@ -14,7 +14,7 @@ The project explores the trade-offs between CPU-efficient classical ML pipelines
 2. **Deep Learning Pipeline**
    - Uses **raw audio files** directly
    - Fine-tunes a pretrained **Wav2Vec2** model for emotion classification
-   - Achieves higher accuracy (~70–75%) by learning complex audio patterns
+   - Achieves higher accuracy (~80–82%) by learning complex audio patterns
    - Requires GPU for training
      
 ## Key Features
@@ -35,7 +35,7 @@ The project explores the trade-offs between CPU-efficient classical ML pipelines
 | Random Forest         | 0.54     | 0.54                | 0.54             | 0.53                | n_estimators=500, max_depth=None, min_samples_split=5, min_samples_leaf=2, max_features='sqrt', class_weight='balanced' |
 | SVM (RBF Kernel)      | 0.55     | 0.54                | 0.55             | 0.54                | C=5, gamma=0.01, class_weight='balanced' |
 | Logistic Regression   | 0.50     | 0.50                | 0.50             | 0.50                | max_iter=3000, class_weight='balanced' |
-| Wav2Vec2 (Deep Learning) | 0.79     | 0.76                | 0.77             | 0.78                | Pretrained Wav2Vec2 base, fine-tuned on raw audio, batch_size=16, learning_rate=1e-5, epochs=10 |
+| Wav2Vec2 (Deep Learning) | 0.82     | 0.81                | 0.79             | 0.78                | Pretrained Wav2Vec2 base, fine-tuned on raw audio, batch_size=16, learning_rate=1e-5, epochs=10 |
 
 **Cross-Validation (Random Forest 5-fold):** 0.541 ± 0.008  
 
