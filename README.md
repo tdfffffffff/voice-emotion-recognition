@@ -26,7 +26,7 @@ The project explores the trade-offs between CPU-efficient classical ML pipelines
 - Optimised accuracy:  
   - Classical ML baseline: ~55%  
   - Enhanced with feature engineering: ~65–70%  
-  - Deep learning Wav2Vec2: ~80–72%  
+  - Deep learning Wav2Vec2: ~80–82%  
 
 ## Model Performance
 
