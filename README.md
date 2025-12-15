@@ -1,9 +1,11 @@
 # voice-emotion-recognition
 
-This repository contains a **voice emotion recognition system** built using public audio datasets (RAVDESS, CREMA-D). The project demonstrates both **classical machine learning on handcrafted features** and **deep learning using Wav2Vec2** to predict emotions from voice recordings.
+This repository contains an **end-to-end Voice Emotion Recognition system**, covering data processing, feature engineering, model training, evaluation, and cloud deployment using **Azure Machine Learning**.
+
+The project compares **classical machine learning approaches** with state-of-the-art **deep learning (Wav2Vec2)** and culminates in a **real-time Azure ML online endpoint** for inference.
 
 ## Overview
-The project explores the trade-offs between CPU-efficient classical ML pipelines and GPU-powered deep learning models:
+The goal of this project is to predict human emotions from speech audio using two complementary approaches:
 
 1. **Classical ML Pipeline**
    - Extracts and aggregates audio features (MFCCs, Chroma STFT, Spectral Contrast, Tonnetz, Zero-Crossing Rate, RMS, etc.)
@@ -16,49 +18,72 @@ The project explores the trade-offs between CPU-efficient classical ML pipelines
    - Fine-tunes a pretrained **Wav2Vec2** model for emotion classification
    - Achieves higher accuracy (~80–82%) by learning complex audio patterns
    - Requires GPU for training
-     
-## Key Features
-- Audio feature extraction: MFCC, Chroma STFT, Spectral Contrast, Tonnetz, Zero-Crossing Rate, RMS  
-- Classical ML models trained on CSV datasets using Azure ML AutoML  
-- Deep learning Wav2Vec2 notebook for end-to-end raw audio classification  
-- Large file support via Git LFS for audio and CSV files  
-- Cost-efficient design: CPU-only classical ML models vs GPU deep learning  
-- Optimised accuracy:  
-  - Classical ML baseline: ~55%  
-  - Enhanced with feature engineering: ~65–70%  
-  - Deep learning Wav2Vec2: ~80–82%  
 
-## Model Performance
+It demonstrates trade-offs between cost, complexity, and performance, and showcases a production-style ML deployment pipeline on Azure.   
 
-| Model                 | Accuracy | Precision (macro avg) | Recall (macro avg) | F1-score (macro avg) | Notes / Hyperparameters |
-|-----------------------|----------|---------------------|------------------|---------------------|------------------------|
-| Random Forest         | 0.54     | 0.54                | 0.54             | 0.53                | n_estimators=500, max_depth=None, min_samples_split=5, min_samples_leaf=2, max_features='sqrt', class_weight='balanced' |
-| SVM (RBF Kernel)      | 0.55     | 0.54                | 0.55             | 0.54                | C=5, gamma=0.01, class_weight='balanced' |
-| Logistic Regression   | 0.50     | 0.50                | 0.50             | 0.50                | max_iter=3000, class_weight='balanced' |
-| Wav2Vec2 (Deep Learning) | 0.82     | 0.81                | 0.79             | 0.78                | Pretrained Wav2Vec2 base, fine-tuned on raw audio, batch_size=16, learning_rate=1e-5, epochs=10 |
+## Classical Machine Learning Pipeline
+### Feature Engineering
+Extracted audio features include:
+- MFCCs
+- Chroma STFT
+- Spectral Contrast
+- Tonnetz
+- Zero-Crossing Rate
+- RMS Energy
+Features are aggregated into tabular CSV datasets for model training.
+
+### Models Trained (Azure AutoML)
+- Random Forest
+- Support Vector Machine (RBF kernel)
+- Logistic Regression
+
+All models were trained using Azure ML AutoML (classification) on CPU compute, providing a cost-efficient baseline.
+
+## Deep Learning Pipeline (Wav2Vec2)
+- Uses raw audio waveforms directly
+- Fine-tunes a pretrained Wav2Vec2 base model
+- Learns complex temporal and spectral patterns beyond handcrafted features
+- Trained using PyTorch + Hugging Face Transformers
+- Requires GPU for training
+
+## Model Performance Summary 
+| Model                        | Accuracy      | Precision (macro) | Recall (macro) | F1 (macro) | Notes                                   |
+| ---------------------------- | ------------- | ----------------- | -------------- | ---------- | --------------------------------------- |
+| Random Forest                | 0.54          | 0.54              | 0.54           | 0.53       | n_estimators=500, class_weight=balanced |
+| SVM (RBF)                    | 0.55          | 0.54              | 0.55           | 0.54       | C=5, gamma=0.01                         |
+| Logistic Regression          | 0.50          | 0.50              | 0.50           | 0.50       | max_iter=3000                           |
+| **Wav2Vec2 (Deep Learning)** | **0.80–0.82** | **0.81**          | **0.79**       | **0.78**   | Fine-tuned, batch_size=16, lr=1e-5      |
 
 **Cross-Validation (Random Forest 5-fold):** 0.541 ± 0.008  
 
-> **Conclusion:** Classical ML models provide a baseline, but their performance is limited by handcrafted features. Deep learning approaches (eg. Wav2Vec2) are needed to better capture complex audio patterns and improve accuracy.
+**Conclusion:** Classical ML models provide a baseline, but their performance is limited by handcrafted features. Deep learning approaches (eg. Wav2Vec2) are needed to better capture complex audio patterns and improve accuracy.
 
+
+## Azure Machine Learning Integration
+**AutoML (Classical ML)**
+- Uploaded CSV datasets to Azure ML Studio
+- Task: Classification
+- Target column: `label`
+- Metrics tracked: Accuracy, Precision, Recall, AUC
+- Best models registered for reuse
+
+**Real-Time Deployment (Deep Learning)**
+The Wav2Vec2 model is deployed using:
+- Azure Managed Online Endpoint
+- Custom inference code (`score.py`)
+- Custom environment (`conda_env.yml`)
+- Key-based authentication
+- Public endpoint for real-time inference
 
 ## Key Learning Outcomes
-- Audio signal processing and feature engineering
+- Audio signal processing & feature engineering
 - Classical ML vs deep learning trade-offs
+- Fine-tuning pretrained speech models
 - Azure ML AutoML workflows
-- Model evaluation using accuracy and weighted AUC
-- Cost-aware ML system design (CPU-only)
-
-## Azure ML Integration
-
-1. Upload `voice_emotion_features.csv` or `voice_emotion_features_enhanced.csv` to Azure ML Studio
-2. Create an **Automated ML Classification Job**:
-   - Task type: `Classification`
-   - Target column: `label`
-   - Validation type: Train-validation split
-   - Compute: Compute instance (small VM)
-   - Track metrics: Accuracy, Precision, Recall, AUC
-3. Register the best model for predictions
+- Managed online endpoint deployment
+- Debugging cloud inference environments
+- Cost-aware ML system design
+- Git & GitHub workflow for ML projects
 
   
 ## Technologies Used
@@ -70,6 +95,7 @@ The project explores the trade-offs between CPU-efficient classical ML pipelines
 - Hugging Face Transformers (Wav2Vec2)
 - Azure Machine Learning (AutoML)
 - LightGBM, RandomForest, Logistic Regression
+- Git/GitHub
 
 ## References
 - RAVDESS Dataset: [https://www.kaggle.com/datasets/uwrfkaggler/ravdess-emotional-speech-audio/data](https://www.kaggle.com/datasets/uwrfkaggler/ravdess-emotional-speech-audio/data)
