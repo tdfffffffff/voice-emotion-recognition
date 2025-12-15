@@ -1,0 +1,19 @@
+name: voice_emotion_env
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - torch==2.9.1
+      - torchaudio==2.9.1
+      - transformers==4.34.0
+      - librosa
+      - scikit-learn
+      - numpy
+      - tqdm
+      - matplotlib
+      - seaborn
+
+
