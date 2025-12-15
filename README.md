@@ -1,24 +1,46 @@
 # voice-emotion-recognition
 
+This repository contains a **voice emotion recognition system** built using public audio datasets (RAVDESS, CREMA-D). The project demonstrates both **classical machine learning on handcrafted features** and **deep learning using Wav2Vec2** to predict emotions from voice recordings.
+
 ## Overview
-This project is a **voice emotion recognition system** built using public audio datasets (RAVDESS, CREMA-D) to extract features and train machine learning models to predict emotions from voice recordings.
+The project explores the trade-offs between CPU-efficient classical ML pipelines and GPU-powered deep learning models:
 
-**The pipeline**:
+1. **Classical ML Pipeline**
+   - Extracts and aggregates audio features (MFCCs, Chroma STFT, Spectral Contrast, Tonnetz, Zero-Crossing Rate, RMS, etc.)
+   - Converts features into tabular CSV datasets
+   - Trains multiple classical models (Random Forest, SVM, Logistic Regression) using Microsoft Azure AutoML
+   - Provides a cost-efficient CPU-only baseline
 
-1. Extracts and aggregates audio features (MFCCs, Chroma, Spectral Contrast, Tonnetz, Zero-Crossing Rate)
-2. Converts features into tabular CSV data
-3. Trains multiple classification models using **Microsoft Azure AutoML**
-4. Predicts emotions like `happy`, `sad`, `angry`, `fear`, `neutral`
-   
+2. **Deep Learning Pipeline**
+   - Uses **raw audio files** directly
+   - Fine-tunes a pretrained **Wav2Vec2** model for emotion classification
+   - Achieves higher accuracy (~70–75%) by learning complex audio patterns
+   - Requires GPU for training
+     
 ## Key Features
+- Audio feature extraction: MFCC, Chroma STFT, Spectral Contrast, Tonnetz, Zero-Crossing Rate, RMS  
+- Classical ML models trained on CSV datasets using Azure ML AutoML  
+- Deep learning Wav2Vec2 notebook for end-to-end raw audio classification  
+- Large file support via Git LFS for audio and CSV files  
+- Cost-efficient design: CPU-only classical ML models vs GPU deep learning  
+- Optimized accuracy:  
+  - Classical ML baseline: ~55%  
+  - Enhanced with feature engineering: ~65–70%  
+  - Deep learning Wav2Vec2: ~70–75%  
 
-- **Audio feature extraction**: MFCC, Chroma STFT, Spectral Contrast, Tonnetz, Zero-Crossing Rate
-- **Classical ML models** trained on CSV datasets using Azure ML AutoML
-- **Large file support** via Git LFS for audio and CSV files
-- **Cost-efficient pipeline**: CPU-based ML models with feature engineering instead of GPU-heavy deep learning
-- **Optimised accuracy**:  
-  - **Baseline**: ~55%
-  - **Enhanced**: ~65–70% with feature engineering and model selection
+## Model Performance
+
+| Model                 | Accuracy | Precision (macro avg) | Recall (macro avg) | F1-score (macro avg) | Notes / Hyperparameters |
+|-----------------------|----------|---------------------|------------------|---------------------|------------------------|
+| Random Forest         | 0.54     | 0.54                | 0.54             | 0.53                | n_estimators=500, max_depth=None, min_samples_split=5, min_samples_leaf=2, max_features='sqrt', class_weight='balanced' |
+| SVM (RBF Kernel)      | 0.55     | 0.54                | 0.55             | 0.54                | C=5, gamma=0.01, class_weight='balanced' |
+| Logistic Regression   | 0.50     | 0.50                | 0.50             | 0.50                | max_iter=3000, class_weight='balanced' |
+| Wav2Vec2 (Deep Learning) | 0.79     | 0.76                | 0.77             | 0.78                | Pretrained Wav2Vec2 base, fine-tuned on raw audio, batch_size=16, learning_rate=1e-5, epochs=10 |
+
+**Cross-Validation (Random Forest 5-fold):** 0.541 ± 0.008  
+
+> **Conclusion:** Classical ML models provide a baseline, but their performance is limited by handcrafted features. Deep learning approaches (e.g., Wav2Vec2) are needed to better capture complex audio patterns and improve accuracy.
+
 
 ## Key Learning Outcomes
 - Audio signal processing and feature engineering
@@ -43,8 +65,11 @@ This project is a **voice emotion recognition system** built using public audio 
 - Python
 - Librosa
 - NumPy / Pandas
+- Scikit-learn
+- PyTorch
+- Hugging Face Transformers (Wav2Vec2)
 - Azure Machine Learning (AutoML)
-- LightGBM, RandomForest, Logistic Regression (Auto-selected)
+- LightGBM, RandomForest, Logistic Regression
 
 ## References
 - RAVDESS Dataset: [https://www.kaggle.com/datasets/uwrfkaggler/ravdess-emotional-speech-audio/data](https://www.kaggle.com/datasets/uwrfkaggler/ravdess-emotional-speech-audio/data)
