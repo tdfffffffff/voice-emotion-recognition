@@ -47,7 +47,7 @@ This project is a **voice emotion recognition system** built using public audio 
 - LightGBM, RandomForest, Logistic Regression (Auto-selected)
 
 ## References
-- RAVDESS Dataset: [https://zenodo.org/record/1188976](url)
-- CREMA-D Dataset: [https://github.com/CheyneyComputerLab/CREMA-D](url)
-- Librosa: [https://librosa.org/doc/latest/index.html](url)
-- Azure Machine Learning: [https://learn.microsoft.com/en-us/azure/machine-learning/](url)
+- RAVDESS Dataset: [https://www.kaggle.com/datasets/uwrfkaggler/ravdess-emotional-speech-audio/data](url)
+- CREMA-D Dataset: [https://www.kaggle.com/datasets/ejlok1/cremad](url)
+- Librosa: [https://github.com/librosa/librosa](url)
+- Azure Machine Learning: [https://azure.microsoft.com/en-us/products/machine-learning](url)
